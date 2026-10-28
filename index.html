@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Air Engineering for a Clean Air Future</title>
+  <meta name="description" content="Communication Skills project: imagining a cleaner city in 2035 through the work of environmental engineer Hira Malik.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0b1b24;
+      --muted: #5b6b74;
+      --soft: #8a9aa3;
+      --bg: #fbfdfd;
+      --line: rgba(11, 27, 36, .08);
+      --mint: #12b886;
+      --sky: #2a9df4;
+      --amber: #f59f00;
+      --grad: linear-gradient(120deg, #12b886, #2a9df4);
+      --glass: rgba(255, 255, 255, .62);
+      --r: 24px;
+      --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: var(--font); color: var(--ink); background: var(--bg);
+      line-height: 1.65; font-size: 17px; -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 { margin: 0; line-height: 1.1; letter-spacing: -.025em; }
+    p { margin: 0; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* ---------- Floating nav ---------- */
+    .nav {
+      position: fixed; top: 14px; left: 50%; transform: translateX(-50%); z-index: 20;
+      width: min(calc(100% - 24px), 860px);
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 6px 6px 16px; border-radius: 999px;
+      background: rgba(255,255,255,.72); backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 8px 30px rgba(11,27,36,.08);
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 15px; color: var(--ink); text-decoration: none; white-space: nowrap; }
+    .logo i { width: 22px; height: 22px; border-radius: 50%; background: var(--grad); box-shadow: 0 0 0 4px rgba(18,184,134,.15); }
+    .nav ul { list-style: none; margin: 0 0 0 auto; padding: 0; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+    .nav ul::-webkit-scrollbar { display: none; }
+    .nav a.link {
+      display: block; padding: 9px 14px; border-radius: 999px; font-size: 14px; font-weight: 600;
+      color: var(--muted); text-decoration: none; white-space: nowrap; transition: .2s;
+    }
+    .nav a.link:hover { color: var(--ink); }
+    .nav a.link.active { background: var(--ink); color: #fff; }
+    @media (max-width: 760px) {
+      .nav { padding: 6px; }
+      .logo span { display: none; }
+      .logo { padding-left: 6px; }
+    }
+
+    /* ---------- Sections ---------- */
+    section { padding: 110px 0; scroll-margin-top: 40px; }
+    .label { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mint); margin-bottom: 18px; }
+    .label::before { content: ""; width: 22px; height: 2px; border-radius: 2px; background: var(--grad); }
+    h2 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; max-width: 760px; }
+    .intro { font-size: 1.12rem; color: var(--muted); max-width: 620px; margin-top: 16px; }
+    .demo { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #9a6400; background: #fff4db; padding: 4px 10px; border-radius: 999px; }
+
+    /* reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .blob { animation: none !important; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding: 120px 0 80px; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; z-index: -1; animation: drift 18s ease-in-out infinite alternate; }
+    .b1 { width: 520px; height: 520px; background: #b8f2dc; top: -120px; left: -120px; }
+    .b2 { width: 460px; height: 460px; background: #c4e4ff; top: 10%; right: -140px; animation-delay: -6s; }
+    .b3 { width: 380px; height: 380px; background: #e3f7ff; bottom: -140px; left: 35%; animation-delay: -12s; }
+    @keyframes drift { to { transform: translate(60px, 40px) scale(1.12); } }
+    .hero-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 48px; align-items: center; width: 100%; }
+    .pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 8px; border-radius: 999px; background: var(--glass); border: 1px solid rgba(255,255,255,.9); font-size: 13.5px; font-weight: 600; color: var(--muted); margin-bottom: 26px; }
+    .pill b { background: var(--ink); color: #fff; padding: 3px 10px; border-radius: 999px; font-size: 12px; }
+    .hero h1 { font-size: clamp(2.7rem, 7.4vw, 5.4rem); font-weight: 800; letter-spacing: -.04em; line-height: 1.02; }
+    .hero p { font-size: 1.15rem; color: var(--muted); max-width: 560px; margin-top: 24px; }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+    .btn.primary { background: var(--ink); color: #fff; box-shadow: 0 10px 24px rgba(11,27,36,.2); }
+    .btn.ghost { color: var(--ink); background: var(--glass); border: 1px solid var(--line); }
+    .btn:hover { transform: translateY(-2px); }
+
+    .gauge { padding: 26px; border-radius: 28px; background: var(--glass); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.95); box-shadow: 0 30px 60px rgba(11,27,36,.08); text-align: center; }
+    .ring { position: relative; width: 190px; height: 190px; margin: 18px auto 8px; }
+    .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .ring .val { position: absolute; inset: 0; display: grid; place-content: center; }
+    .ring .val strong { font-size: 30px; font-weight: 800; letter-spacing: -.03em; }
+    .ring .val span { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .zones { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; text-align: left; }
+    .zone { font-size: 13px; font-weight: 600; padding: 9px 12px; border-radius: 14px; background: rgba(255,255,255,.7); display: flex; align-items: center; gap: 8px; }
+    .zone i { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); flex: none; }
+    .zone.w i { background: var(--amber); }
+    .gauge small { display: block; margin-top: 14px; font-size: 12px; color: var(--soft); }
+    @media (max-width: 860px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .gauge { max-width: 380px; }
+    }
+
+    /* ---------- Situation (bento) ---------- */
+    .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 56px; }
+    .tile { border-radius: var(--r); padding: 34px; }
+    .tile h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
+    .tile p { color: var(--muted); }
+    .t-good { background: linear-gradient(150deg, #e7fbf3, #f3fbff); }
+    .t-risk { background: #0b1b24; color: #fff; }
+    .t-risk p { color: #a9bac2; }
+    .t-risk .big { font-size: 3.4rem; font-weight: 800; line-height: 1; margin-bottom: 14px; }
+    .t-good .big { font-size: 3.4rem; font-weight: 800; line-height: 1; margin-bottom: 14px; }
+    .sources { grid-column: 1 / -1; border: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .sources h3 { font-size: 1.05rem; margin: 0 16px 0 0; }
+    .chip { padding: 10px 18px; border-radius: 999px; background: #fff8ea; color: #8a5a00; font-weight: 700; font-size: 14.5px; }
+    @media (max-width: 760px) { .bento { grid-template-columns: 1fr; } .tile { padding: 26px; } .sources h3 { width: 100%; } }
+
+    /* ---------- Story ---------- */
+    .story { background: linear-gradient(180deg, var(--bg), #f1f8fb 40%, var(--bg)); }
+    .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 56px; counter-reset: s; position: relative; }
+    .step { background: #fff; border-radius: 22px; padding: 24px 20px; border: 1px solid var(--line); position: relative; transition: transform .25s, box-shadow .25s; }
+    .step:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(11,27,36,.07); }
+    .step .n { font-size: 2.6rem; font-weight: 800; letter-spacing: -.04em; line-height: 1; margin-bottom: 18px; }
+    .step h3 { font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; margin-bottom: 8px; }
+    .step p { font-size: 14.5px; color: var(--muted); line-height: 1.55; }
+    .spark { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); }
+    .spark svg { width: 100%; height: 44px; display: block; }
+    .spark span { font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #9a6400; }
+    @media (max-width: 980px) { .steps { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+    /* ---------- Skills ---------- */
+    .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+    .skill { position: relative; border-radius: var(--r); padding: 34px 30px; background: #fff; border: 1px solid var(--line); overflow: hidden; transition: transform .25s; }
+    .skill::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--grad); transform: scaleX(0); transform-origin: left; transition: transform .4s ease; }
+    .skill:hover { transform: translateY(-4px); }
+    .skill:hover::after { transform: scaleX(1); }
+    .skill .icon { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: linear-gradient(150deg, #e7fbf3, #e6f3ff); color: var(--ink); margin-bottom: 26px; }
+    .skill .icon svg { width: 24px; height: 24px; }
+    .skill h3 { font-size: 1.35rem; font-weight: 800; margin-bottom: 12px; }
+    .skill p { color: var(--muted); font-size: 15.5px; }
+    .skill .eg { margin-top: 20px; font-size: 14px; color: var(--ink); font-weight: 600; display: flex; gap: 10px; }
+    .skill .eg::before { content: "→"; color: var(--mint); }
+    @media (max-width: 860px) { .skills { grid-template-columns: 1fr; } }
+
+    /* ---------- People ---------- */
+    .cloud { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 48px; }
+    .who { padding: 16px 26px; border-radius: 999px; font-size: clamp(1rem, 2.2vw, 1.25rem); font-weight: 700; background: #fff; border: 1px solid var(--line); transition: .25s; }
+    .who:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .who:nth-child(3n+1) { background: #ecfaf4; border-color: transparent; }
+    .who:nth-child(3n+2) { background: #ecf5ff; border-color: transparent; }
+    .who:nth-child(3n+1):hover, .who:nth-child(3n+2):hover { background: var(--ink); }
+
+    /* ---------- Team ---------- */
+    .team-wrap { background: #0b1b24; color: #fff; border-radius: 36px; padding: 64px 44px; position: relative; overflow: hidden; }
+    .team-wrap::before { content: ""; position: absolute; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(18,184,134,.35), transparent 70%); top: -180px; right: -120px; }
+    .team-wrap h2 { color: #fff; position: relative; }
+    .team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px 32px; margin-top: 40px; position: relative; }
+    .member { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .member h3 { font-size: 1.08rem; font-weight: 700; letter-spacing: -.01em; }
+    .member span { font-size: 14px; color: #8fa3ad; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+    @media (max-width: 860px) { .team { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .team { grid-template-columns: 1fr; } .team-wrap { padding: 44px 24px; border-radius: 28px; } }
+
+    footer { padding: 40px 0 56px; text-align: center; font-size: 14px; color: var(--soft); }
+    footer strong { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Sections">
+  <a class="logo" href="#intro"><i aria-hidden="true"></i><span>CleanAir 2035</span></a>
+  <ul>
+    <li><a class="link" href="#intro">Intro</a></li>
+    <li><a class="link" href="#situation">Air in 2035</a></li>
+    <li><a class="link" href="#story">Hira's Day</a></li>
+    <li><a class="link" href="#skills">Skills</a></li>
+    <li><a class="link" href="#people">People</a></li>
+    <li><a class="link" href="#team">Team</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- 1. Title & intro -->
+  <section id="intro" class="hero">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <div class="pill"><b>2035</b> A Communication Skills project</div>
+        <h1>Air Engineering for a <span class="grad-text">Clean Air Future</span></h1>
+        <p>This project imagines everyday life in a cleaner city in the year 2035. We follow Hira Malik, an environmental engineer who monitors air quality, checks sensor readings, works with factories, and listens to residents.</p>
+        <div class="cta">
+          <a class="btn primary" href="#story">Follow Hira's day →</a>
+          <a class="btn ghost" href="#team">Meet the team</a>
+        </div>
+      </div>
+
+      <div class="gauge reveal" aria-label="Illustrative air status display">
+        <span class="demo">Illustration · not real data</span>
+        <div class="ring">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#12b886"/><stop offset="1" stop-color="#2a9df4"/></linearGradient></defs>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(11,27,36,.07)" stroke-width="10"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#g)" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="88"/>
+          </svg>
+          <div class="val"><strong>Clean</strong><span>City air status</span></div>
+        </div>
+        <div class="zones">
+          <div class="zone"><i></i>Homes</div>
+          <div class="zone"><i></i>Schools</div>
+          <div class="zone"><i></i>Roads</div>
+          <div class="zone w"><i></i>Industry</div>
+        </div>
+        <small>A pretend city display for this presentation</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. The 2035 air situation -->
+  <section id="situation">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">The 2035 air situation</div>
+        <h2>The air is better. Keeping it that way is the real job.</h2>
+      </div>
+      <div class="bento">
+        <div class="tile t-good reveal">
+          <div class="big grad-text">Improved</div>
+          <h3>Cleaner than before</h3>
+          <p>By 2035 the city's air has improved, and engineers like Hira keep watch over it every day with air-quality monitoring.</p>
+        </div>
+        <div class="tile t-risk reveal">
+          <div class="big" style="color:#ffc34d">Not permanent</div>
+          <h3>Pollution can return</h3>
+          <p>If its sources are not managed well, or if the monitoring systems stop working properly, pollution can come back.</p>
+        </div>
+        <div class="tile sources reveal">
+          <h3>What needs managing</h3>
+          <span class="chip">Factories</span>
+          <span class="chip">Vehicles</span>
+          <span class="chip">Farming</span>
+          <span class="chip">Construction</span>
+          <span class="chip">Monitoring systems</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. A day with Hira Malik -->
+  <section id="story" class="story">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">A day with Hira Malik</div>
+        <h2>One unusual reading. Five careful steps.</h2>
+        <p class="intro">Hira Malik is an environmental engineer. One day, her monitoring shows something has changed in the air. Here is how she handles it.</p>
+      </div>
+      <div class="steps">
+        <article class="step reveal">
+          <div class="n grad-text">01</div>
+          <h3>Notices a particle spike</h3>
+          <p>While checking readings, she sees a sudden rise in particles.</p>
+          <div class="spark">
+            <svg viewBox="0 0 160 44" preserveAspectRatio="none" aria-label="Sketch of a sudden spike in a line graph" role="img">
+              <polyline fill="none" stroke="#12b886" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" points="0,36 20,35 40,37 60,34 80,36 95,33 108,6 120,22 140,30 160,31"/>
+              <circle cx="108" cy="6" r="3.5" fill="#f59f00"/>
+            </svg>
+            <span>Sketch · not real data</span>
+          </div>
+        </article>
+        <article class="step reveal">
+          <div class="n grad-text">02</div>
+          <h3>Checks the sensor</h3>
+          <p>Before raising an alarm, she checks the reading is real and not a faulty sensor.</p>
+        </article>
+        <article class="step reveal">
+          <div class="n grad-text">03</div>
+          <h3>Visits the factory</h3>
+          <p>She goes to the factory to see the situation for herself.</p>
+        </article>
+        <article class="step reveal">
+          <div class="n grad-text">04</div>
+          <h3>Talks and listens</h3>
+          <p>She speaks with the factory's manager and listens to local residents.</p>
+        </article>
+        <article class="step reveal">
+          <div class="n grad-text">05</div>
+          <h3>Plans extra monitoring</h3>
+          <p>To keep a closer watch on the area, she plans additional monitoring.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. What engineers need -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">What engineers need</div>
+        <h2>Sensors measure the air. People protect it.</h2>
+      </div>
+      <div class="skills">
+        <article class="skill reveal">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h6M9 14h4"/></svg></div>
+          <h3>Communication &amp; listening</h3>
+          <p>Explaining problems clearly and listening carefully, because everyone involved sees the problem a little differently.</p>
+          <div class="eg">Hira talks with the manager and residents.</div>
+        </article>
+        <article class="skill reveal">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Honesty &amp; integrity</h3>
+          <p>People trust engineers to tell the truth about the air they breathe: check the facts, report them accurately, and never hide problems.</p>
+          <div class="eg">Hira checks the sensor before acting.</div>
+        </article>
+        <article class="skill reveal">
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div>
+          <h3>Adaptability</h3>
+          <p>Air quality can change without warning, so engineers must be ready to change their plans when something new happens.</p>
+          <div class="eg">Hira plans extra monitoring.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. People involved -->
+  <section id="people">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="label">People involved</div>
+        <h2>Clean air is everyone's work.</h2>
+        <p class="intro">An air engineer works with many groups across the city.</p>
+      </div>
+      <div class="cloud reveal">
+        <span class="who">Residents</span>
+        <span class="who">Factory managers</span>
+        <span class="who">City officials</span>
+        <span class="who">School staff</span>
+        <span class="who">Farmers</span>
+        <span class="who">Transport workers</span>
+        <span class="who">Construction companies</span>
+        <span class="who">Sensor technicians</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Project team -->
+  <section id="team">
+    <div class="wrap">
+      <div class="team-wrap reveal">
+        <div class="label">Project team</div>
+        <h2>The people behind this project.</h2>
+        <div class="team">
+          <div class="member"><h3>Abhigyan Krishna</h3><span>2602051191</span></div>
+          <div class="member"><h3>Abhay Shrivastava</h3><span>2602051245</span></div>
+          <div class="member"><h3>Yashdeep</h3><span>2602051184</span></div>
+          <div class="member"><h3>Kartikay Goel</h3><span>2602051199</span></div>
+          <div class="member"><h3>Kavya kumar jha</h3><span>2602051213</span></div>
+          <div class="member"><h3>Shreyash chaturvedi</h3><span>2602051188</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Air Engineering for a Clean Air Future</strong> · Communication Skills Project</p>
+    <p>The city, the year 2035 and Hira Malik's story are imagined. All displays on this page are illustrations, not real data.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var sections = document.querySelectorAll('main section');
+    var links = document.querySelectorAll('.nav a.link');
+    var list = document.querySelector('.nav ul');
+    var reveals = document.querySelectorAll('.reveal');
+
+    if (!('IntersectionObserver' in window)) {
+      reveals.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+
+    // Fade elements in as they scroll into view
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function (el, i) {
+      el.style.transitionDelay = (el.classList.contains('step') || el.classList.contains('skill') ? (i % 5) * 70 : 0) + 'ms';
+      ro.observe(el);
+    });
+
+    // Highlight the current section in the nav
+    var so = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        links.forEach(function (a) {
+          var on = a.getAttribute('href') === '#' + e.target.id;
+          a.classList.toggle('active', on);
+          if (on && list.scrollWidth > list.clientWidth) {
+            list.scrollTo({ left: a.offsetLeft - list.offsetLeft - (list.clientWidth - a.offsetWidth) / 2, behavior: 'smooth' });
+          }
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(function (s) { so.observe(s); });
+  })();
+</script>
+</body>
+</html>
