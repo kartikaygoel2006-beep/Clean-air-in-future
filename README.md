@@ -2,7 +2,7 @@
 
 Communication Skills project website. It imagines a cleaner city in 2035 through the work of Hira Malik, an environmental engineer.
 
-**Live site:** https://kartikaygoel2006-beep.github.io/clean-air-in-future/
+**Live site:** https://kartikaygoel2006-beep.github.io/Clean-air-in-future/
 
 The city, the year 2035 and Hira Malik's story are imagined. All dashboards and charts on the site are illustrations, not real data.
 
